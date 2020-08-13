@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+	<!-- <property name="ENCODER_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} 
+		[%thread] %-5level %logger{80} - %msg%n" /> -->
+
+	<!-- [日期 时间] [日志等级] [产生该日志事件的线程名] [类与方法明] [行数] [错误信息] -->
+	<property name="ENCODER_PATTERN"
+		value="[%d{yyyy-MM-dd HH:mm:ss.SSS}] [%level] [%thread] [%c.%M\\(\\)] [Line:%L] - %msg%n" />
+	<!--<property name="LOG_PATH"
+		value="D:\PorjectDevelopmentWorkSpce\workspace-pt\JobCenter\logs" />-->
+	<property name="LOG_PATH" value="/demo/redisdemo/"/>
+	<property name="LOG_FILE_PREFIX" value="isrv" />
+	<property name="LOF_SPLITE_SIZE" value="20MB"/>
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<encoder
+			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+			<pattern>${ENCODER_PATTERN}</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE-WORK-INFO"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_FILE_PREFIX}.info.framework.log
+		</file>
+
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE_PREFIX}.backup/${LOG_FILE_PREFIX}.info.framework-%d{yyyy-MM-dd}.%i.zip
+			</fileNamePattern>
+			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+			<maxFileSize>${LOF_SPLITE_SIZE}</maxFileSize>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${ENCODER_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
+		</encoder>
+	</appender>
+	<appender name="FILE-WORK-ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_FILE_PREFIX}.error.framework.log
+		</file>
+
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!--过滤 Error -->
+			<level>ERROR</level>
+		</filter>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE_PREFIX}.backup/${LOG_FILE_PREFIX}.error.framework-%d{yyyy-MM-dd}.%i.zip
+			</fileNamePattern>
+			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+			<maxFileSize>${LOF_SPLITE_SIZE}</maxFileSize>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${ENCODER_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
+		</encoder>
+	</appender>
+	<appender name="FILE-INFO"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_FILE_PREFIX}.info.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE_PREFIX}.backup/${LOG_FILE_PREFIX}.info-%d{yyyy-MM-dd}.%i.zip
+			</fileNamePattern>
+			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+			<maxFileSize>${LOF_SPLITE_SIZE}</maxFileSize>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${ENCODER_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
+		</encoder>
+	</appender>
+
+	<appender name="FILE-ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_PATH}/${LOG_FILE_PREFIX}.error.log</file>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<!--过滤 Error -->
+			<level>ERROR</level>
+		</filter>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_PATH}/${LOG_FILE_PREFIX}.backup/${LOG_FILE_PREFIX}.error-%d{yyyy-MM-dd}.%i.zip
+			</fileNamePattern>
+			<maxHistory>${LOG_MAX_HISTORY}</maxHistory>
+			<maxFileSize>${LOF_SPLITE_SIZE}</maxFileSize>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${ENCODER_PATTERN}</pattern>  <!-- 日志文件中日志的格式 -->
+		</encoder>
+
+	</appender>
+	<logger name="com.eco.job" additivity="false">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE-INFO" level="INFO" />
+		<appender-ref ref="FILE-ERROR" level="ERROR" />
+	</logger>
+	<root level="INFO">
+		<appender-ref ref="STDOUT" />
+		<appender-ref ref="FILE-WORK-INFO" leve="INFO"
+			additivity="false" />
+		<appender-ref ref="FILE-WORK-ERROR" leve="ERROR"
+			additivity="false" />
+	</root>
+</configuration>
