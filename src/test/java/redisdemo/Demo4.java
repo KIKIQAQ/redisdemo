@@ -10,10 +10,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.Cursor;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ScanOptions;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.core.*;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.demo.redisdemo.RedisDemoApplication;
@@ -30,7 +27,7 @@ public class Demo4 {
 	
 	@Test
 	public void method1() {
-		redisTemplate.opsForHash().put("hashValue","map1","map1-1");  
+        redisTemplate.opsForHash().put("hashValue","map1","map1-1");
 		redisTemplate.opsForHash().put("hashValue","map2","map2-2");  
 		List<Object> hashList = redisTemplate.opsForHash().values("hashValue");  
 		System.out.println("通过values(H key)方法获取变量中的hashMap值:" + hashList); 

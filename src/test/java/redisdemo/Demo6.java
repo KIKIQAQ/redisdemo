@@ -207,4 +207,5 @@ public class Demo6 {
 	public void method12() {
 		System.out.println("2020-07-11 15:40:21.122".compareTo("2020-07-11 15:42:21"));
 	}
+	
 }
